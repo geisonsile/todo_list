@@ -1,0 +1,284 @@
+:root {
+    color-scheme: dark;
+
+    /* Paleta */
+    --cor-fundo: #0d1117;
+    --cor-fundo-glow: #1b2740;
+    --cor-superficie: #161b22;
+    --cor-superficie-alta: #1c2330;
+    --cor-borda: #262e3a;
+    --cor-borda-forte: #3a4557;
+
+    --cor-texto: #e6edf3;
+    --cor-texto-suave: #8b98a9;
+
+    --cor-destaque: #4f8cff;
+    --cor-destaque-hover: #6ba0ff;
+    --cor-perigo: #ff6b6b;
+    --cor-perigo-suave: #2a1a1f;
+
+    /* Formas e espaçamentos */
+    --raio-sm: 8px;
+    --raio-md: 12px;
+    --raio-lg: 18px;
+    --largura-container: 520px;
+    --espaco: 16px;
+
+    /* Efeitos */
+    --sombra-card: 0 24px 60px -24px rgba(0, 0, 0, 0.9);
+    --sombra-destaque: 0 8px 20px -8px rgba(79, 140, 255, 0.65);
+    --transicao: 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ============================================================
+   Reset básico
+   ============================================================ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    /* Centraliza o conteúdo (container) na tela */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+
+    background-color: var(--cor-fundo);
+    background-image:
+        radial-gradient(60% 50% at 50% 0%, var(--cor-fundo-glow) 0%, transparent 70%),
+        radial-gradient(40% 40% at 85% 100%, rgba(79, 140, 255, 0.08) 0%, transparent 70%);
+    background-repeat: no-repeat;
+
+    color: var(--cor-texto);
+    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   Título
+   ============================================================ */
+h1 {
+    width: 100%;
+    max-width: var(--largura-container);
+    margin: 0 0 24px;
+    font-size: clamp(1.5rem, 4vw, 1.9rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-align: center;
+}
+
+/* ============================================================
+   Campo de entrada + botão adicionar
+   ============================================================ */
+.input-container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    max-width: var(--largura-container);
+    padding: 10px;
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-lg);
+    box-shadow: var(--sombra-card);
+    transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+
+.input-container:focus-within {
+    border-color: var(--cor-borda-forte);
+    box-shadow: var(--sombra-card), 0 0 0 4px rgba(79, 140, 255, 0.12);
+}
+
+#input-tarefa {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 14px;
+    background-color: transparent;
+    border: none;
+    border-radius: var(--raio-md);
+    color: var(--cor-texto);
+    font: inherit;
+    outline: none;
+}
+
+#input-tarefa::placeholder {
+    color: var(--cor-texto-suave);
+}
+
+/* ============================================================
+   Botões (base + hover)
+   ============================================================ */
+button {
+    padding: 12px 20px;
+    background-color: var(--cor-destaque);
+    border: 1px solid transparent;
+    border-radius: var(--raio-md);
+    color: #0b1220;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color var(--transicao),
+        transform var(--transicao),
+        box-shadow var(--transicao),
+        border-color var(--transicao),
+        color var(--transicao);
+}
+
+#btn-adicionar:hover {
+    background-color: var(--cor-destaque-hover);
+    box-shadow: var(--sombra-destaque);
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+button:focus-visible {
+    outline: 2px solid var(--cor-destaque);
+    outline-offset: 2px;
+}
+
+/* ============================================================
+   Lista de tarefas
+   ============================================================ */
+#lista-tarefas {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    max-width: var(--largura-container);
+    max-height: 55vh;
+    margin: 20px 0 0;
+    padding: 0 4px 0 0;
+    overflow-y: auto;
+    list-style: none;
+}
+
+/* Barra de rolagem discreta */
+#lista-tarefas::-webkit-scrollbar {
+    width: 6px;
+}
+
+#lista-tarefas::-webkit-scrollbar-thumb {
+    background-color: var(--cor-borda-forte);
+    border-radius: 999px;
+}
+
+#lista-tarefas::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+/* Cada tarefa: texto à esquerda, botão excluir na extremidade direita */
+#lista-tarefas li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 12px 12px 16px;
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-md);
+    transition:
+        background-color var(--transicao),
+        border-color var(--transicao),
+        transform var(--transicao);
+    animation: surgir 220ms ease-out;
+}
+
+#lista-tarefas li:hover {
+    background-color: var(--cor-superficie-alta);
+    border-color: var(--cor-borda-forte);
+    transform: translateX(2px);
+}
+
+/* Texto da tarefa */
+#lista-tarefas li > span {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+/* Botão excluir */
+.btn-excluir {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    background-color: transparent;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-sm);
+    color: var(--cor-texto-suave);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.btn-excluir:hover {
+    background-color: var(--cor-perigo-suave);
+    border-color: var(--cor-perigo);
+    color: var(--cor-perigo);
+    transform: translateY(-1px);
+}
+
+/* ============================================================
+   Animação de entrada
+   ============================================================ */
+@keyframes surgir {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================================
+   Responsividade e acessibilidade
+   ============================================================ */
+@media (max-width: 480px) {
+    body {
+        padding: 24px 16px;
+    }
+
+    h1 {
+        margin-bottom: 18px;
+    }
+
+    .input-container {
+        flex-direction: column;
+        gap: 8px;
+        border-radius: var(--raio-md);
+    }
+
+    #btn-adicionar {
+        width: 100%;
+    }
+
+    #lista-tarefas {
+        max-height: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
